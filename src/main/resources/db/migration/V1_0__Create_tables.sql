@@ -10,6 +10,6 @@ CREATE TABLE operation (
     description text NOT NULL,
     date date NOT NULL,
     amount numeric NOT NULL,
-    from_account integer NOT NULL REFERENCES operation (id),
-    to_account integer NOT NULL REFERENCES operation (id)
+    from_account integer NOT NULL REFERENCES account (id),
+    to_account integer NOT NULL REFERENCES account (id)
 );
