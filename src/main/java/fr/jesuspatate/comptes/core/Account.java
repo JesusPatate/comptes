@@ -1,4 +1,4 @@
-package fr.jesuspatate.comptes;
+package fr.jesuspatate.comptes.core;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-class Account {
+public class Account {
 
     enum Type {
         ASSET, EXPENSE, INCOME
