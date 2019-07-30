@@ -1,18 +1,19 @@
-package fr.jesuspatate.comptes.api;
+package fr.jesuspatate.comptes.exceptions;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
-class AccountNotFoundException extends ApiException {
+public class AccountNotFoundException extends ApiException {
 
     private static final String MESSAGE = "Account %d not found";
 
     @JsonIgnore
     private final int id;
 
-    AccountNotFoundException(final int id) {
+    public AccountNotFoundException(final int id) {
         super(ApiExceptionCode.ACCOUNT_NOT_FOUND, String.format(MESSAGE, id));
         this.id = id;
     }

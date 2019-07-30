@@ -1,18 +1,21 @@
 package fr.jesuspatate.comptes.api;
 
-import fr.jesuspatate.comptes.core.Transactions;
-import fr.jesuspatate.comptes.core.Transaction;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
+import fr.jesuspatate.comptes.annotations.arch.Adapter;
+import fr.jesuspatate.comptes.core.Transaction;
+import fr.jesuspatate.comptes.core.Transactions;
 
+@Adapter
 @RestController
 @RequestMapping("transactions/search")
 class SearchTransactionsController {

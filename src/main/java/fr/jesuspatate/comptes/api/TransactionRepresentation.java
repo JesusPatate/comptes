@@ -1,8 +1,8 @@
 package fr.jesuspatate.comptes.api;
 
-import lombok.Getter;
-
 import java.time.LocalDate;
+
+import lombok.Getter;
 
 @Getter
 class TransactionRepresentation {
@@ -15,7 +15,7 @@ class TransactionRepresentation {
 
     private final double amount;
 
-    private final int fromAcccount;
+    private final int fromAccount;
 
     private final int toAccount;
 
@@ -31,7 +31,7 @@ class TransactionRepresentation {
         this.description = description;
         this.date = date;
         this.amount = amount;
-        this.fromAcccount = fromAcccount;
+        this.fromAccount = fromAcccount;
         this.toAccount = toAccount;
     }
 }

@@ -1,4 +1,4 @@
-package fr.jesuspatate.comptes.api;
+package fr.jesuspatate.comptes.exceptions;
 
 import java.util.HashMap;
 import java.util.Map;

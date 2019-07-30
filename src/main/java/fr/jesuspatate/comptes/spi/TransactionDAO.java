@@ -1,14 +1,13 @@
 package fr.jesuspatate.comptes.spi;
 
-import fr.jesuspatate.comptes.core.Transaction;
-import org.springframework.data.repository.PagingAndSortingRepository;
-
 import java.time.LocalDate;
 import java.util.List;
 
-interface TransactionDAO extends PagingAndSortingRepository<Transaction, Integer> {
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-    List<Transaction> findAll();
+interface TransactionDAO extends PagingAndSortingRepository<DbTransaction, Integer> {
 
-    List<Transaction> findByDate(LocalDate date);
+    List<DbTransaction> findAll();
+
+    List<DbTransaction> findByDate(LocalDate date);
 }

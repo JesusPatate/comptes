@@ -1,27 +1,32 @@
 package fr.jesuspatate.comptes.core;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
-
-@Data
-@Entity
+@Getter
+@Setter
 public class Account {
 
-    enum Type {
+    public enum Type {
         ASSET, EXPENSE, INCOME
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
 
-    @Enumerated(EnumType.STRING)
     private Type type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent")
     private Account parent;
+
+    public Account(final int id, final String name, final Type type) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+    }
+
+    Account(final String name, final Type type) {
+        this.name = name;
+        this.type = type;
+    }
 }

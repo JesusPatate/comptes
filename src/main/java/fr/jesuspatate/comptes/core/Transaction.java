@@ -1,33 +1,53 @@
 package fr.jesuspatate.comptes.core;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 
-@Data
-@Entity
-@Table(name = "operation")
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Transaction {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
     private LocalDate date;
 
-    @Column(nullable = false)
     private double amount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "from_account")
     private Account from;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "to_account")
     private Account to;
+
+    public Transaction(
+            final int id,
+            final String description,
+            final LocalDate date,
+            final double amount,
+            final Account from,
+            final Account to) {
+
+        this.id = id;
+        this.description = description;
+        this.date = date;
+        this.amount = amount;
+        this.from = from;
+        this.to = to;
+    }
+
+    Transaction(
+            final String description,
+            final LocalDate date,
+            final double amount,
+            final Account from,
+            final Account to) {
+
+        this.description = description;
+        this.date = date;
+        this.amount = amount;
+        this.from = from;
+        this.to = to;
+    }
 }
