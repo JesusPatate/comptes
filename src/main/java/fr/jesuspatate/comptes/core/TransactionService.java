@@ -57,4 +57,8 @@ public class TransactionService {
         this.transactions.create(transaction);
         return transaction;
     }
+
+    public List<Transaction> getAccountTransactions(final int id) {
+        return this.transactions.findByAccount(id);
+    }
 }

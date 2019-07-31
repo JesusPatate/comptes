@@ -10,4 +10,8 @@ interface TransactionDAO extends PagingAndSortingRepository<DbTransaction, Integ
     List<DbTransaction> findAll();
 
     List<DbTransaction> findByDate(LocalDate date);
+
+    List<DbTransaction> findByFrom(DbAccount account);
+
+    List<DbTransaction> findByTo(DbAccount account);
 }

@@ -33,7 +33,7 @@ class TransactionsController {
     public List<TransactionRepresentation> getAll() {
         final List<Transaction> listOfTransactions = this.service.getAll();
         final List<TransactionRepresentation> representations = listOfTransactions.stream()
-                .map(this::toRepresentation)
+                .map(this.mapper::toRepresentation)
                 .collect(Collectors.toList());
 
         return representations;
@@ -49,9 +49,7 @@ class TransactionsController {
     }
 
     @PostMapping
-    public TransactionRepresentation create(
-            @RequestBody final TransactionRepresentation representation) {
-
+    public TransactionRepresentation create(@RequestBody final TransactionRepresentation representation) {
         final Transaction transaction = this.service.create(
                 representation.getDescription(),
                 representation.getDate(),
@@ -59,10 +57,6 @@ class TransactionsController {
                 representation.getFromAccount(),
                 representation.getToAccount());
 
-        return this.mapper.toRepresentation(transaction);
-    }
-
-    private TransactionRepresentation toRepresentation(final Transaction transaction) {
         return this.mapper.toRepresentation(transaction);
     }
 }

@@ -16,4 +16,6 @@ public interface Transactions {
     List<Transaction> findByDate(LocalDate date);
 
     void create(Transaction transaction);
+
+    List<Transaction> findByAccount(int id);
 }

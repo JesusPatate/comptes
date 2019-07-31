@@ -3,6 +3,8 @@ package fr.jesuspatate.comptes.api;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import fr.jesuspatate.comptes.core.Transaction;
+import fr.jesuspatate.comptes.core.TransactionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,17 +22,31 @@ import fr.jesuspatate.comptes.exceptions.AccountNotFoundException;
 @RequestMapping("accounts")
 class AccountsController {
 
-    private final AccountService service;
+    private final AccountService accountService;
 
-    AccountsController(final AccountService service) {
-        this.service = service;
+    private final TransactionService transactionService;
+
+    private final AccountMapper accountMapper;
+
+    private final TransactionMapper transactionMapper;
+
+    AccountsController(
+            final AccountService accountService,
+            final TransactionService transactionService,
+            final AccountMapper accountMapper,
+            final TransactionMapper transactionMapper) {
+
+        this.accountService = accountService;
+        this.transactionService = transactionService;
+        this.accountMapper = accountMapper;
+        this.transactionMapper = transactionMapper;
     }
 
     @GetMapping
     public List<AccountRepresentation> getAll() {
-        final List<Account> listOfAccounts = this.service.getAll();
+        final List<Account> listOfAccounts = this.accountService.getAll();
         final List<AccountRepresentation> representations = listOfAccounts.stream()
-                .map(this::toRepresentation)
+                .map(this.accountMapper::toRepresentation)
                 .collect(Collectors.toList());
 
         return representations;
@@ -38,11 +54,21 @@ class AccountsController {
 
     @GetMapping("/{id}")
     public AccountRepresentation getAccount(@PathVariable("id") final int id) {
-        final Account account = this.service.get(id)
+        final Account account = this.accountService.get(id)
                 .orElseThrow(() -> new AccountNotFoundException(id));
 
-        final AccountRepresentation representation = this.toRepresentation(account);
+        final AccountRepresentation representation = this.accountMapper.toRepresentation(account);
         return representation;
+    }
+
+    @GetMapping("/{id}/transactions")
+    public List<TransactionRepresentation> getAccountTransactions(@PathVariable("id") final int id) {
+        final List<Transaction> transactions = this.transactionService.getAccountTransactions(id);
+        final List<TransactionRepresentation> representations = transactions.stream()
+                .map(this.transactionMapper::toRepresentation)
+                .collect(Collectors.toList());
+
+        return representations;
     }
 
     @PostMapping
@@ -51,14 +77,7 @@ class AccountsController {
 
         final String name = representation.getName();
         final String type = representation.getType();
-        final Account account = this.service.create(name, type);
-        return this.toRepresentation(account);
-    }
-
-    private AccountRepresentation toRepresentation(final Account account) {
-        return new AccountRepresentation(
-                account.getId(),
-                account.getName(),
-                String.valueOf(account.getType()));
+        final Account account = this.accountService.create(name, type);
+        return this.accountMapper.toRepresentation(account);
     }
 }
