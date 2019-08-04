@@ -17,5 +17,5 @@ public interface Transactions {
 
     void create(Transaction transaction);
 
-    List<Transaction> findByAccount(int id);
+    List<Transaction> findByAccount(Account account);
 }

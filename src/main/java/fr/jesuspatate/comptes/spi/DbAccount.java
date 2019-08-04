@@ -1,15 +1,6 @@
 package fr.jesuspatate.comptes.spi;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Data;
 
@@ -30,6 +21,9 @@ class DbAccount {
 
     @Enumerated(EnumType.STRING)
     private Type type;
+
+    @Column(name = "initial_balance")
+    private Double initialBalance;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")

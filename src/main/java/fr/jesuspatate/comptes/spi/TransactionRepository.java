@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import fr.jesuspatate.comptes.core.Account;
 import fr.jesuspatate.comptes.exceptions.AccountNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -60,22 +61,38 @@ class TransactionRepository implements Transactions {
         transaction.setId(dbTransaction.getId());
     }
 
+//    @Override
+//    public List<Transaction> findByAccount(final Account account) {
+//        final DbAccount dbAccount = this.accountDAO.findById(account.getId())
+//                .orElseThrow(() -> new RuntimeException("Could not find account " + account.getName() +
+//                        " (" + account.getId() + ")"));
+//
+//        final List<DbTransaction> expenses = this.transactionDAO.findByFromOrderByDate(dbAccount);
+//        final List<DbTransaction> incomes = this.transactionDAO.findByToOrderByDate(dbAccount);
+//        final List<Transaction> transactions = new ArrayList<>();
+//
+//        expenses.stream()
+//                .map(this.transactionMapper::fromDbModel)
+//                .forEach(transactions::add);
+//
+//        incomes.stream()
+//                .map(this.transactionMapper::fromDbModel)
+//                .forEach(transactions::add);
+//
+//        return transactions;
+//    }
+
+
     @Override
-    public List<Transaction> findByAccount(final int id) {
-        final DbAccount dbAccount = this.accountDAO.findById(id)
-                .orElseThrow(() -> new AccountNotFoundException(id));
+    public List<Transaction> findByAccount(final Account account) {
+        final DbAccount dbAccount = this.accountDAO.findById(account.getId())
+                .orElseThrow(() -> new RuntimeException("Could not find account " + account.getName() +
+                        " (" + account.getId() + ")"));
 
-        final List<DbTransaction> expenses = this.transactionDAO.findByFrom(dbAccount);
-        final List<DbTransaction> incomes = this.transactionDAO.findByTo(dbAccount);
-        final List<Transaction> transactions = new ArrayList<>();
-
-        expenses.stream()
+        final List<DbTransaction> dbTransactions = this.transactionDAO.findByAccount(dbAccount);
+        final List<Transaction> transactions = dbTransactions.stream()
                 .map(this.transactionMapper::fromDbModel)
-                .forEach(transactions::add);
-
-        incomes.stream()
-                .map(this.transactionMapper::fromDbModel)
-                .forEach(transactions::add);
+                .collect(Collectors.toList());
 
         return transactions;
     }

@@ -13,12 +13,28 @@ public class AccountMapper {
         final DbAccount dbAccount = new DbAccount();
         dbAccount.setName(account.getName());
         dbAccount.setType(this.convertType(account.getType()));
+        dbAccount.setInitialBalance(account.getInitialBalance());
+
+        account.getParent()
+                .map(this::toDbModel)
+                .ifPresent(dbAccount::setParent);
+
         return dbAccount;
     }
 
     Account fromDbModel(final DbAccount dbAccount) {
         final Account.Type type = this.convertType(dbAccount.getType());
-        return new Account(dbAccount.getId(), dbAccount.getName(), type);
+        final DbAccount dbParent = dbAccount.getParent();
+        final Account account;
+
+        if (dbParent != null) {
+            final Account parent = this.fromDbModel(dbParent);
+            account = new Account(dbAccount.getId(), dbAccount.getName(), type, dbAccount.getInitialBalance(), parent);
+        } else {
+            account = new Account(dbAccount.getId(), dbAccount.getName(), type, dbAccount.getInitialBalance());
+        }
+
+        return account;
     }
 
     private DbAccount.Type convertType(final Account.Type type) {

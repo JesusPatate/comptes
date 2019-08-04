@@ -2,6 +2,7 @@ CREATE TABLE account (
     id serial PRIMARY KEY,
     name text NOT NULL,
     type text NOT NULL,
+    initial_balance numeric DEFAULT 0.0,
     parent integer REFERENCES account (id)
 );
 

@@ -43,9 +43,9 @@ class AccountsController {
     }
 
     @GetMapping
-    public List<AccountRepresentation> getAll() {
+    public List<OutputAccountRepresentation> getAll() {
         final List<Account> listOfAccounts = this.accountService.getAll();
-        final List<AccountRepresentation> representations = listOfAccounts.stream()
+        final List<OutputAccountRepresentation> representations = listOfAccounts.stream()
                 .map(this.accountMapper::toRepresentation)
                 .collect(Collectors.toList());
 
@@ -53,11 +53,11 @@ class AccountsController {
     }
 
     @GetMapping("/{id}")
-    public AccountRepresentation getAccount(@PathVariable("id") final int id) {
+    public OutputAccountRepresentation getAccount(@PathVariable("id") final int id) {
         final Account account = this.accountService.get(id)
                 .orElseThrow(() -> new AccountNotFoundException(id));
 
-        final AccountRepresentation representation = this.accountMapper.toRepresentation(account);
+        final OutputAccountRepresentation representation = this.accountMapper.toRepresentation(account);
         return representation;
     }
 
@@ -72,12 +72,13 @@ class AccountsController {
     }
 
     @PostMapping
-    public AccountRepresentation createAccount(
-            @RequestBody final AccountRepresentation representation) {
+    public OutputAccountRepresentation createAccount(
+            @RequestBody final InputAccountRepresentation representation) {
 
         final String name = representation.getName();
         final String type = representation.getType();
-        final Account account = this.accountService.create(name, type);
+        final Double initialBalance = representation.getInitialBalance();
+        final Account account = this.accountService.create(name, type, initialBalance);
         return this.accountMapper.toRepresentation(account);
     }
 }
