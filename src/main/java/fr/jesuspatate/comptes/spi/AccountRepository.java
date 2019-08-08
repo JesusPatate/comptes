@@ -41,4 +41,10 @@ class AccountRepository implements Accounts {
         this.dao.save(dbAccount);
         account.setId(dbAccount.getId());
     }
+
+    @Override
+    public void update(final Account account) {
+        final DbAccount dbAccount = this.accountMapper.toDbModel(account);
+        this.dao.save(dbAccount);
+    }
 }

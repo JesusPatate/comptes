@@ -13,4 +13,6 @@ public interface Accounts {
     Optional<Account> get(int id);
 
     void insert(Account account);
+
+    void update(Account account);
 }
