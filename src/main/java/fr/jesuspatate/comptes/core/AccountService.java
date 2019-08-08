@@ -1,11 +1,10 @@
 package fr.jesuspatate.comptes.core;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 import fr.jesuspatate.comptes.exceptions.AccountNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +13,6 @@ import fr.jesuspatate.comptes.annotations.arch.Port;
 @Port
 @Component
 public class AccountService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AccountService.class);
 
     private final Accounts accounts;
 
@@ -43,18 +40,18 @@ public class AccountService {
         return this.accounts.get(id);
     }
 
-    public double getAccountBalance(final Account account) {
+    public BigDecimal getAccountBalance(final Account account) {
         final List<Transaction> transactions = this.transactions.findByAccount(account);
         final Account.Type type = account.getType();
-        final int multiplier = (type == Account.Type.ASSET) ? -1 : 1;
-        double balance = account.getInitialBalance();
+        final BigDecimal multiplier = (type == Account.Type.ASSET) ? new BigDecimal(-1) : BigDecimal.ONE;
+        BigDecimal balance = account.getInitialBalance();
 
 
         for (final Transaction transaction : transactions) {
             if (transaction.getFrom().equals(account)) {
-                balance += multiplier * transaction.getAmount();
+                balance = balance.add(multiplier.multiply(transaction.getAmount()));
             } else {
-                balance += transaction.getAmount();
+                balance = balance.add(transaction.getAmount());
             }
         }
 
@@ -68,7 +65,7 @@ public class AccountService {
      * @param type Account's type
      * @param initialBalance Account's initial balance
      */
-    public Account create(final String name, final String type, final double initialBalance) {
+    public Account create(final String name, final String type, final BigDecimal initialBalance) {
         final Account.Type accountType = Account.Type.valueOf(type);
         final Account account = new Account(name, accountType, initialBalance);
         this.accounts.insert(account);
@@ -83,7 +80,7 @@ public class AccountService {
      * @param parentId Parent account's identifier
      * @return Account
      */
-    public Account create(final String name, final String type, final double initialBalance, final int parentId) {
+    public Account create(final String name, final String type, final BigDecimal initialBalance, final int parentId) {
         final Account.Type accountType = Account.Type.valueOf(type);
         final Account parent = this.get(parentId).orElseThrow(() -> new AccountNotFoundException(parentId));
         final Account account = new Account(name, accountType, initialBalance, parent);

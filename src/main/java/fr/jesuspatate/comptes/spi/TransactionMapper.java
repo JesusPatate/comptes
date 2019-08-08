@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import fr.jesuspatate.comptes.core.Account;
 import fr.jesuspatate.comptes.core.Transaction;
 
+import java.math.BigDecimal;
+
 @Component("DbTransactionMapper")
 class TransactionMapper {
 
@@ -23,7 +25,8 @@ class TransactionMapper {
         final DbTransaction dbTransaction = new DbTransaction();
         dbTransaction.setDescription(transaction.getDescription());
         dbTransaction.setDate(transaction.getDate());
-        dbTransaction.setAmount(transaction.getAmount());
+        final BigDecimal amount = transaction.getAmount();
+        dbTransaction.setAmount(amount.doubleValue());
 
         final int fromAccountId = transaction.getFrom().getId();
         final DbAccount fromAccount = this.accountDAO.findById(fromAccountId)

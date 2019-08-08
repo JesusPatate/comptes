@@ -4,6 +4,8 @@ import fr.jesuspatate.comptes.core.Account;
 import fr.jesuspatate.comptes.core.AccountService;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 class AccountMapper {
 
@@ -18,13 +20,13 @@ class AccountMapper {
                 .map(Account::getId)
                 .orElse(null);
 
-        final double balance = this.service.getAccountBalance(account);
+        final BigDecimal balance = this.service.getAccountBalance(account);
 
         return new OutputAccountRepresentation(
                 account.getId(),
                 account.getName(),
                 String.valueOf(account.getType()),
-                balance,
+                balance.doubleValue(),
                 parentId);
     }
 }

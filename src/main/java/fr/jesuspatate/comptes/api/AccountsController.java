@@ -1,16 +1,13 @@
 package fr.jesuspatate.comptes.api;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import fr.jesuspatate.comptes.core.Transaction;
 import fr.jesuspatate.comptes.core.TransactionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.jesuspatate.comptes.annotations.arch.Adapter;
 import fr.jesuspatate.comptes.core.Account;
@@ -78,7 +75,15 @@ class AccountsController {
         final String name = representation.getName();
         final String type = representation.getType();
         final Double initialBalance = representation.getInitialBalance();
-        final Account account = this.accountService.create(name, type, initialBalance);
+        final Optional<Integer> parent = representation.getParent();
+        final Account account;
+
+        if (parent.isPresent()) {
+            account = this.accountService.create(name, type, BigDecimal.valueOf(initialBalance), parent.get());
+        } else {
+            account = this.accountService.create(name, type, BigDecimal.valueOf(initialBalance));
+        }
+
         return this.accountMapper.toRepresentation(account);
     }
 }

@@ -1,5 +1,6 @@
 package fr.jesuspatate.comptes.core;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import lombok.Getter;
@@ -15,12 +16,22 @@ public class Transaction {
 
     private LocalDate date;
 
-    private double amount;
+    private BigDecimal amount;
 
     private Account from;
 
     private Account to;
 
+    /**
+     * Constructor intended only for Hibernate.
+     *
+     * @param id Identifier of the transaction
+     * @param description Short description of the transaction
+     * @param date Date of transaction
+     * @param amount Amount of the transaction
+     * @param from Source account of the transaction
+     * @param to Destination account of the transaction
+     */
     public Transaction(
             final int id,
             final String description,
@@ -32,7 +43,7 @@ public class Transaction {
         this.id = id;
         this.description = description;
         this.date = date;
-        this.amount = amount;
+        this.amount = BigDecimal.valueOf(amount);
         this.from = from;
         this.to = to;
     }
@@ -40,7 +51,7 @@ public class Transaction {
     Transaction(
             final String description,
             final LocalDate date,
-            final double amount,
+            final BigDecimal amount,
             final Account from,
             final Account to) {
 

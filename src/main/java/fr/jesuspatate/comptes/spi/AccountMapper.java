@@ -4,16 +4,23 @@ import org.springframework.stereotype.Component;
 
 import fr.jesuspatate.comptes.core.Account;
 
+import java.math.BigDecimal;
+
 @Component("DbAccountMapper")
 public class AccountMapper {
-    public AccountMapper() {
-    }
 
     DbAccount toDbModel(final Account account) {
         final DbAccount dbAccount = new DbAccount();
+        final Integer id = account.getId();
+
+        if (id != null) {
+            dbAccount.setId(id);
+        }
+
         dbAccount.setName(account.getName());
         dbAccount.setType(this.convertType(account.getType()));
-        dbAccount.setInitialBalance(account.getInitialBalance());
+        final BigDecimal initialBalance = account.getInitialBalance();
+        dbAccount.setInitialBalance(initialBalance.doubleValue());
 
         account.getParent()
                 .map(this::toDbModel)

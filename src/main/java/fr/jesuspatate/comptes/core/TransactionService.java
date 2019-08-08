@@ -1,5 +1,6 @@
 package fr.jesuspatate.comptes.core;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class TransactionService {
     public Transaction create(
             final String description,
             final LocalDate date,
-            final double amount,
+            final BigDecimal amount,
             final int fromAccountId,
             final int toAccountId) {
 

@@ -2,12 +2,15 @@ package fr.jesuspatate.comptes.core;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Optional;
 
 @Getter
 @Setter
+@ToString
 public class Account {
 
     public enum Type {
@@ -20,7 +23,7 @@ public class Account {
 
     private Type type;
 
-    private double initialBalance;
+    private BigDecimal initialBalance;
 
     private Account parent;
 
@@ -41,11 +44,11 @@ public class Account {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.initialBalance = initialBalance;
+        this.initialBalance = BigDecimal.valueOf(initialBalance);
     }
 
     /**
-     * Constructor intended for Hibernate.
+     * Constructor intended only for Hibernate.
      *
      * @param id Account's unique identifier
      * @param name Account's name
@@ -65,17 +68,17 @@ public class Account {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.initialBalance = initialBalance;
+        this.initialBalance = BigDecimal.valueOf(initialBalance);
         this.parent = parent;
     }
 
-    Account(final String name, final Type type, final double initialBalance) {
+    Account(final String name, final Type type, final BigDecimal initialBalance) {
         this.name = name;
         this.type = type;
         this.initialBalance = initialBalance;
     }
 
-    Account(final String name, final Type type, final double initialBalance, final Account parent) {
+    Account(final String name, final Type type, final BigDecimal initialBalance, final Account parent) {
         Objects.requireNonNull(parent);
 
         this.name = name;

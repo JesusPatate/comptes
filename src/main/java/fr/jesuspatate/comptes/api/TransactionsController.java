@@ -1,5 +1,6 @@
 package fr.jesuspatate.comptes.api;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,7 +54,7 @@ class TransactionsController {
         final Transaction transaction = this.service.create(
                 representation.getDescription(),
                 representation.getDate(),
-                representation.getAmount(),
+                BigDecimal.valueOf(representation.getAmount()),
                 representation.getFromAccount(),
                 representation.getToAccount());
 
