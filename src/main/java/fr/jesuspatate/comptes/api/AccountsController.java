@@ -62,7 +62,9 @@ class AccountsController {
 
     @GetMapping("/{id}/transactions")
     public List<TransactionRepresentation> getAccountTransactions(@PathVariable("id") final int id) {
-        final List<Transaction> transactions = this.transactionService.getAccountTransactions(id);
+        final Account account = this.accountService.get(id)
+                .orElseThrow(() -> new AccountNotFoundException(id));
+        final List<Transaction> transactions = this.transactionService.getAccountTransactions(account);
         final List<TransactionRepresentation> representations = transactions.stream()
                 .map(this.transactionMapper::toRepresentation)
                 .collect(Collectors.toList());

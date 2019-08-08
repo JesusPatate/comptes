@@ -59,10 +59,7 @@ public class TransactionService {
         return transaction;
     }
 
-    public List<Transaction> getAccountTransactions(final int id) {
-        final Account account = this.accounts.get(id)
-                .orElseThrow(() -> new AccountNotFoundException(id));
-
+    public List<Transaction> getAccountTransactions(final Account account) {
         return this.transactions.findByAccount(account);
     }
 }
