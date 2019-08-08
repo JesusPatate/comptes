@@ -1,13 +1,11 @@
 package fr.jesuspatate.comptes.spi;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import fr.jesuspatate.comptes.core.Account;
-import fr.jesuspatate.comptes.exceptions.AccountNotFoundException;
 import org.springframework.stereotype.Component;
 
 import fr.jesuspatate.comptes.core.Transaction;
@@ -61,28 +59,6 @@ class TransactionRepository implements Transactions {
         transaction.setId(dbTransaction.getId());
     }
 
-//    @Override
-//    public List<Transaction> findByAccount(final Account account) {
-//        final DbAccount dbAccount = this.accountDAO.findById(account.getId())
-//                .orElseThrow(() -> new RuntimeException("Could not find account " + account.getName() +
-//                        " (" + account.getId() + ")"));
-//
-//        final List<DbTransaction> expenses = this.transactionDAO.findByFromOrderByDate(dbAccount);
-//        final List<DbTransaction> incomes = this.transactionDAO.findByToOrderByDate(dbAccount);
-//        final List<Transaction> transactions = new ArrayList<>();
-//
-//        expenses.stream()
-//                .map(this.transactionMapper::fromDbModel)
-//                .forEach(transactions::add);
-//
-//        incomes.stream()
-//                .map(this.transactionMapper::fromDbModel)
-//                .forEach(transactions::add);
-//
-//        return transactions;
-//    }
-
-
     @Override
     public List<Transaction> findByAccount(final Account account) {
         final DbAccount dbAccount = this.accountDAO.findById(account.getId())
@@ -95,5 +71,11 @@ class TransactionRepository implements Transactions {
                 .collect(Collectors.toList());
 
         return transactions;
+    }
+
+    @Override
+    public void delete(final Transaction transaction) {
+        final DbTransaction dbTransaction = this.transactionMapper.toDbModel(transaction);
+        this.transactionDAO.delete(dbTransaction);
     }
 }

@@ -4,12 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import fr.jesuspatate.comptes.annotations.arch.Adapter;
 import fr.jesuspatate.comptes.core.Transaction;
@@ -59,5 +55,14 @@ class TransactionsController {
                 representation.getToAccount());
 
         return this.mapper.toRepresentation(transaction);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") final int id) {
+        final Transaction transaction = this.service.get(id)
+                .orElseThrow(() -> new TransactionNotFoundException(id));
+
+        this.service.delete(transaction);
     }
 }

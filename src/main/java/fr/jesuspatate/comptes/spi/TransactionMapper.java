@@ -23,6 +23,12 @@ class TransactionMapper {
 
     DbTransaction toDbModel(final Transaction transaction) {
         final DbTransaction dbTransaction = new DbTransaction();
+        final Integer id = transaction.getId();
+
+        if (id != null) {
+            dbTransaction.setId(id);
+        }
+
         dbTransaction.setDescription(transaction.getDescription());
         dbTransaction.setDate(transaction.getDate());
         final BigDecimal amount = transaction.getAmount();

@@ -18,4 +18,6 @@ public interface Transactions {
     void create(Transaction transaction);
 
     List<Transaction> findByAccount(Account account);
+
+    void delete(Transaction transaction);
 }

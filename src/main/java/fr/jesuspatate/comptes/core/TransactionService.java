@@ -62,4 +62,8 @@ public class TransactionService {
     public List<Transaction> getAccountTransactions(final Account account) {
         return this.transactions.findByAccount(account);
     }
+
+    public void delete(final Transaction transaction) {
+        this.transactions.delete(transaction);
+    }
 }
