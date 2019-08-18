@@ -7,14 +7,13 @@ import java.util.stream.Collectors;
 
 import fr.jesuspatate.comptes.core.Transaction;
 import fr.jesuspatate.comptes.core.TransactionService;
-import fr.jesuspatate.comptes.exceptions.MissingFieldException;
+import fr.jesuspatate.comptes.core.exceptions.MissingFieldException;
 import org.springframework.web.bind.annotation.*;
 
 import fr.jesuspatate.comptes.annotations.arch.Adapter;
 import fr.jesuspatate.comptes.core.Account;
 import fr.jesuspatate.comptes.core.AccountService;
-import fr.jesuspatate.comptes.exceptions.AccountNotFoundException;
-import org.springframework.web.client.HttpClientErrorException;
+import fr.jesuspatate.comptes.core.exceptions.AccountNotFoundException;
 
 @Adapter
 @RestController

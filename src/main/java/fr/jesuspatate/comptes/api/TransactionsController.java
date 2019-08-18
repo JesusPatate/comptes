@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import fr.jesuspatate.comptes.annotations.arch.Adapter;
 import fr.jesuspatate.comptes.core.Transaction;
 import fr.jesuspatate.comptes.core.TransactionService;
-import fr.jesuspatate.comptes.exceptions.TransactionNotFoundException;
+import fr.jesuspatate.comptes.core.exceptions.TransactionNotFoundException;
 
 @Adapter
 @RestController

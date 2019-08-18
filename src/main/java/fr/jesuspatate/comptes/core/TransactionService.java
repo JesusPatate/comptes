@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.jesuspatate.comptes.exceptions.AccountNotFoundException;
+import fr.jesuspatate.comptes.core.exceptions.AccountNotFoundException;
 
 @Component
 public class TransactionService {

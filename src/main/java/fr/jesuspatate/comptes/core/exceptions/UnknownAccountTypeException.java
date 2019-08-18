@@ -1,4 +1,4 @@
-package fr.jesuspatate.comptes.exceptions;
+package fr.jesuspatate.comptes.core.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

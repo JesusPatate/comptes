@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import fr.jesuspatate.comptes.exceptions.AccountNotFoundException;
-import fr.jesuspatate.comptes.exceptions.UnknownAccountTypeException;
+import fr.jesuspatate.comptes.core.exceptions.AccountNotFoundException;
+import fr.jesuspatate.comptes.core.exceptions.UnknownAccountTypeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

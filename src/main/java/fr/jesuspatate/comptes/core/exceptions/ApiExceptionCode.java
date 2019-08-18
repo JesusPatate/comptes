@@ -1,4 +1,4 @@
-package fr.jesuspatate.comptes.exceptions;
+package fr.jesuspatate.comptes.core.exceptions;
 
 enum ApiExceptionCode {
     TRANSACTION_NOT_FOUND,
