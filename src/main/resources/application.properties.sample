@@ -1,3 +1,5 @@
 spring.datasource.url=url
 spring.datasource.username=username
 spring.datasource.password=password
+
+logging.level.fr.jesuspatate=DEBUG
