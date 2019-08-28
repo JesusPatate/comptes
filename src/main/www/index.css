@@ -1,0 +1,15 @@
+.table_header {
+  border-bottom: 1px solid black;
+}
+
+th {
+  padding-bottom: 5px;
+}
+
+td {
+  padding: 0 1em;
+}
+
+.transaction_amount {
+  /* text-align: right; */
+}
