@@ -15,6 +15,7 @@ import fr.jesuspatate.comptes.core.exceptions.TransactionNotFoundException;
 @Adapter
 @RestController
 @RequestMapping("transactions")
+@CrossOrigin
 class TransactionsController {
 
     private final TransactionService service;

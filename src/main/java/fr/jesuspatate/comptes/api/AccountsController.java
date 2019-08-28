@@ -18,6 +18,7 @@ import fr.jesuspatate.comptes.core.exceptions.AccountNotFoundException;
 @Adapter
 @RestController
 @RequestMapping("accounts")
+@CrossOrigin
 class AccountsController {
 
     private final AccountService accountService;
